@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
     // Add a MEMBER VARIABLE here for the NavMeshAgent Component named _agent.
     // It does NOT need to be tunable in the Inspector.
 
-    // ??? _agent
+    NavMeshAgent _agent;
 
     // STEP 1 -----------------------------------------------------------------
 
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
     // We need a Vector3 to keep track of their LAST KNOWN LOCATION.
     // Add a MEMBER VARIABLE here for that location.
     // It does NOT need to be tunable in the Inspector.
-    
+    private Vector3 LastKnown
 
     // STEP 4 -----------------------------------------------------------------
 
@@ -47,17 +48,18 @@ public class Player : MonoBehaviour
     //      to use GetComponent to grab this GameObject's NavMeshAgent and store
     //      it in the _agent MEMBER VARIABLE.
     //
-    //private void ????()
-    //{
-    //
-    //    _mainCamera = Camera.main;
-    //    _animator = GetComponent<Animator>();
-    //}
+    private void Start()
+    {
+       _agent.GetComponent<NavMeshAgent>();
+       _mainCamera = Camera.main;
+       _animator = GetComponent<Animator>();
+    }
     // STEP 2 -----------------------------------------------------------------
 
     // ------------------------------------------------------------------------
     private void Update()
     {
+
         if (Input.GetMouseButton(0))
         {
             _mouseRay = _mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -65,8 +67,11 @@ public class Player : MonoBehaviour
 
             if (_raycastSuccessful)
             {
+                
                 Vector3 mouseHitPosition = _raycastHit.point;
 
+              // NavMeshAgent.SetDestination(mouseHitPosition);
+                
                 // STEP 3 -----------------------------------------------------
                 // Inside this Update method, I've already written code for you
                 //      that finds the location in the game world where the

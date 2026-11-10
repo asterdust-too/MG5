@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     // We need a Vector3 to keep track of their LAST KNOWN LOCATION.
     // Add a MEMBER VARIABLE here for that location.
     // It does NOT need to be tunable in the Inspector.
-    private Vector3 LastKnown
+    private Vector3 LastKnownPosition;
 
     // STEP 4 -----------------------------------------------------------------
 
@@ -50,10 +50,12 @@ public class Player : MonoBehaviour
     //
     private void Start()
     {
-       _agent.GetComponent<NavMeshAgent>();
+       _agent = GetComponent<NavMeshAgent>();
        _mainCamera = Camera.main;
        _animator = GetComponent<Animator>();
+        
     }
+
     // STEP 2 -----------------------------------------------------------------
 
     // ------------------------------------------------------------------------
@@ -70,15 +72,15 @@ public class Player : MonoBehaviour
                 
                 Vector3 mouseHitPosition = _raycastHit.point;
 
-              // NavMeshAgent.SetDestination(mouseHitPosition);
-                
+                // NavMeshAgent.SetDestination(mouseHitPosition);
+
                 // STEP 3 -----------------------------------------------------
                 // Inside this Update method, I've already written code for you
                 //      that finds the location in the game world where the
                 //      player clicked.
                 // This location is stored in mouseHitPosition.
                 // Make the NavMeshAgent move to this position.
-                //
+                _agent.SetDestination(mouseHitPosition);
                 // Feature 2 should work after this step.
 
 
@@ -89,7 +91,8 @@ public class Player : MonoBehaviour
                 //      walk somewhere new, we should also store our CURRENT
                 //      POSITION in our LAST KNOWN LOCATION MEMBER VARIABLE
                 //      here.
-                // 
+                gameObject.GetComponent<Transform>();
+                LastKnownPosition = transform.position;
                 // You'll need this GameObject's Transform's position.
                 // See an example in the documentation: https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Transform-position.html
 
@@ -114,7 +117,7 @@ public class Player : MonoBehaviour
         // STEP 6 -------------------------------------------------------------
 
         // Uncomment the below line to fix the Pudu's animation if you want.
-        //_animator.SetBool("isMoving", _agent.velocity.magnitude > 0.0f);
+        _animator.SetBool("isMoving", _agent.velocity.magnitude > 0.0f);
     }
     
     // ------------------------------------------------------------------------
